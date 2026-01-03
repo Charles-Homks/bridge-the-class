@@ -1,0 +1,112 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+
+const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "Product", path: "/product" },
+  { name: "Demo", path: "/demo" },
+  { name: "Pricing", path: "/pricing" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contact" },
+];
+
+export function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+      <div className="container-main">
+        <nav className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">C</span>
+            </div>
+            <span className="font-bold text-xl text-foreground">Classbridge</span>
+          </Link>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  location.pathname === link.path
+                    ? "text-primary bg-primary/5"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/contact">Get a sample pack</Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link to="/contact">Request access</Link>
+            </Button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-secondary"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </nav>
+      </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-border bg-background"
+          >
+            <div className="container-main py-4 space-y-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    location.pathname === link.path
+                      ? "text-primary bg-primary/5"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="pt-4 space-y-2">
+                <Button variant="outline" className="w-full" asChild>
+                  <Link to="/contact" onClick={() => setIsOpen(false)}>
+                    Get a sample pack
+                  </Link>
+                </Button>
+                <Button className="w-full" asChild>
+                  <Link to="/contact" onClick={() => setIsOpen(false)}>
+                    Request access
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+}
