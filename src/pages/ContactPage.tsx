@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 
 export default function ContactPage() {
   const { toast } = useToast();
@@ -29,7 +29,7 @@ export default function ContactPage() {
 
     toast({
       title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
+      description: "We'll get back to you within 24 hours.",
     });
 
     setFormData({
@@ -58,7 +58,7 @@ export default function ContactPage() {
         <div className="container-main">
           <SectionHeader
             title="Talk to us"
-            description="If you're a teacher, school owner, learning coordinator, or education organisation, we'd love to learn your workflow and share a demo pack."
+            description="Whether you're a teacher, school owner, learning coordinator, or education organisation—we'd love to hear about your workflow and share a demo pack."
           />
         </div>
       </section>
@@ -77,7 +77,7 @@ export default function ContactPage() {
                 Get in touch
               </h2>
 
-              <div className="space-y-6">
+              <div className="space-y-6 mb-8">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Mail className="w-5 h-5 text-primary" />
@@ -88,7 +88,7 @@ export default function ContactPage() {
                       href="mailto:hello@classbridge.co"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      [hello@classbridge…]
+                      hello@classbridge.co
                     </a>
                   </div>
                 </div>
@@ -98,10 +98,18 @@ export default function ContactPage() {
                     <Phone className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium text-foreground">
-                      Phone / WhatsApp
-                    </p>
-                    <p className="text-muted-foreground">[number]</p>
+                    <p className="font-medium text-foreground">Phone</p>
+                    <p className="text-muted-foreground">+234 800 123 4567</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">WhatsApp</p>
+                    <p className="text-muted-foreground">+234 800 123 4567</p>
                   </div>
                 </div>
 
@@ -111,9 +119,29 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-medium text-foreground">Location</p>
-                    <p className="text-muted-foreground">[City, Nigeria]</p>
+                    <p className="text-muted-foreground">Lagos, Nigeria</p>
                   </div>
                 </div>
+              </div>
+
+              <div className="p-6 bg-secondary/50 rounded-xl border border-border">
+                <h3 className="font-semibold text-foreground mb-2">
+                  What happens next?
+                </h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-medium flex-shrink-0">1</span>
+                    We'll reply within 24 hours
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-medium flex-shrink-0">2</span>
+                    We'll send you a sample lesson pack
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-medium flex-shrink-0">3</span>
+                    We'll schedule a quick call if helpful
+                  </li>
+                </ul>
               </div>
             </motion.div>
 
@@ -124,69 +152,68 @@ export default function ContactPage() {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Name *</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your full name"
+                    required
+                  />
+                </div>
+
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your name"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="organisation">Organisation</Label>
+                    <Label htmlFor="organisation">Organisation (optional)</Label>
                     <Input
                       id="organisation"
                       name="organisation"
                       value={formData.organisation}
                       onChange={handleChange}
-                      placeholder="School or company"
+                      placeholder="School or company name"
                     />
                   </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="role">Role</Label>
+                    <Label htmlFor="role">Role (optional)</Label>
                     <Input
                       id="role"
                       name="role"
                       value={formData.role}
                       onChange={handleChange}
-                      placeholder="Your role"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="you@example.com"
-                      required
+                      placeholder="e.g. Teacher, Coordinator"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
+                  <Label htmlFor="email">Email *</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message *</Label>
                   <Textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your workflow or what you'd like to learn..."
+                    placeholder="Tell us about your teaching context, what subjects you teach, or what you'd like to see in a demo pack..."
                     rows={5}
                     required
                   />
                 </div>
 
-                <Button type="submit" size="lg" disabled={isSubmitting}>
+                <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? (
                     "Sending..."
                   ) : (

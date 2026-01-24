@@ -6,6 +6,7 @@ interface SectionHeaderProps {
   title: string;
   description?: string;
   centered?: boolean;
+  align?: "left" | "center";
   className?: string;
 }
 
@@ -14,8 +15,10 @@ export function SectionHeader({
   title,
   description,
   centered = true,
+  align,
   className,
 }: SectionHeaderProps) {
+  const isCenter = align === "left" ? false : centered;
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,7 +27,7 @@ export function SectionHeader({
       transition={{ duration: 0.5 }}
       className={cn(
         "max-w-3xl",
-        centered && "mx-auto text-center",
+        isCenter && "mx-auto text-center",
         className
       )}
     >

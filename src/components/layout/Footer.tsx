@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Twitter, Linkedin, Instagram } from "lucide-react";
 
 const footerLinks = {
   product: [
@@ -13,6 +14,12 @@ const footerLinks = {
   ],
 };
 
+const socialLinks = [
+  { name: "Twitter", icon: Twitter, href: "#" },
+  { name: "LinkedIn", icon: Linkedin, href: "#" },
+  { name: "Instagram", icon: Instagram, href: "#" },
+];
+
 export function Footer() {
   return (
     <footer className="bg-secondary/50 border-t border-border">
@@ -26,9 +33,21 @@ export function Footer() {
               </div>
               <span className="font-bold text-xl text-foreground">Classbridge</span>
             </Link>
-            <p className="text-muted-foreground max-w-sm">
+            <p className="text-muted-foreground max-w-sm mb-6">
               An AI teaching copilot that helps teachers create lesson plans, class notes, quizzes, and more—fast.
             </p>
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-secondary/80 transition-colors"
+                  aria-label={social.name}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Product Links */}
@@ -74,6 +93,9 @@ export function Footer() {
           <div className="flex items-center gap-6">
             <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Privacy Policy
+            </Link>
+            <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Contact
             </Link>
           </div>
         </div>
