@@ -5,17 +5,26 @@ import { SectionHeader } from "@/components/shared/SectionHeader";
 import { FeatureCard } from "@/components/shared/FeatureCard";
 import { CTASection } from "@/components/shared/CTASection";
 import { Layout } from "@/components/layout/Layout";
+import { LessonPlanMockup } from "@/components/demo/LessonPlanMockup";
+import { QuizMockup } from "@/components/demo/QuizMockup";
+import { MarkingGuideMockup } from "@/components/demo/MarkingGuideMockup";
+import heroTeacher from "@/assets/hero-teacher.jpg";
+import studentsLearning from "@/assets/students-learning.jpg";
 import {
   ArrowRight,
   BookOpen,
   FileText,
   CheckSquare,
   MessageSquare,
-  Sparkles,
   Users,
   Building,
   ChevronRight,
-  Play,
+  Clock,
+  Target,
+  Zap,
+  Shield,
+  Globe,
+  Layers,
 } from "lucide-react";
 import {
   Accordion,
@@ -43,7 +52,6 @@ export default function HomePage() {
     <Layout>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/10 rounded-full blur-3xl opacity-50" />
 
@@ -72,10 +80,7 @@ export default function HomePage() {
                 </Link>
               </Button>
               <Button size="xl" variant="hero-outline" asChild>
-                <Link to="/demo">
-                  <Play className="w-5 h-5" />
-                  View demo
-                </Link>
+                <Link to="/demo">View demo</Link>
               </Button>
             </div>
 
@@ -85,24 +90,29 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          {/* Hero screenshot placeholder */}
+          {/* Hero Image */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-16 max-w-5xl mx-auto"
           >
-            <div className="screenshot-placeholder min-h-[400px] md:min-h-[500px] shadow-xl border border-border/50">
-              <div className="text-center p-8">
-                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Sparkles className="w-8 h-8 text-primary" />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50">
+              <img
+                src={heroTeacher}
+                alt="Teacher engaging with students in a modern classroom"
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6">
+                <div className="bg-card/90 backdrop-blur-sm rounded-xl p-4 border border-border">
+                  <p className="text-sm font-medium text-foreground">
+                    Generate complete lesson packs from a simple prompt
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Lesson plan • Class notes • Quiz • Answer key • Marking guide
+                  </p>
                 </div>
-                <p className="font-medium text-foreground">
-                  Screenshot 1: Lesson plan output
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Placeholder for product screenshot
-                </p>
               </div>
             </div>
           </motion.div>
@@ -123,13 +133,22 @@ export default function HomePage() {
                 The Problem
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Teachers spend hours preparing lesson materials
+                Lesson planning takes too long
               </h2>
-              <p className="text-lg text-muted-foreground">
-                Often repeating the same work every term. Learners also struggle
-                when lessons aren't structured, consistent, or matched to their
-                level.
-              </p>
+              <ul className="space-y-4 text-lg text-muted-foreground">
+                <li className="flex items-start gap-3">
+                  <ChevronRight className="w-5 h-5 text-destructive mt-1 flex-shrink-0" />
+                  <span>Teachers spend 5–10 hours weekly on lesson prep alone</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <ChevronRight className="w-5 h-5 text-destructive mt-1 flex-shrink-0" />
+                  <span>The same materials get recreated term after term</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <ChevronRight className="w-5 h-5 text-destructive mt-1 flex-shrink-0" />
+                  <span>Inconsistent lesson quality affects learner outcomes</span>
+                </li>
+              </ul>
             </motion.div>
 
             <motion.div
@@ -142,17 +161,17 @@ export default function HomePage() {
                 The Solution
               </span>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Classbridge generates a ready-to-use lesson pack
+                Generate ready-to-use lesson packs instantly
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                From a simple prompt—a complete pack you can teach from today:
+                Classbridge turns your teaching intent into structured materials. Just provide:
               </p>
               <ul className="space-y-3">
                 {[
-                  "Subject",
-                  "Topic",
-                  "Class level",
-                  "Duration",
+                  "Subject (e.g. Basic Science, English)",
+                  "Topic (e.g. Photosynthesis, Verb Tenses)",
+                  "Class level (e.g. JSS1, JSS2, JSS3)",
+                  "Duration (e.g. 40 minutes)",
                   "Learning objectives (optional)",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3">
@@ -172,26 +191,26 @@ export default function HomePage() {
           <SectionHeader
             badge="Features"
             title="What you get"
-            description="Everything you need to teach with confidence"
+            description="Everything you need to teach with confidence, in one pack"
           />
 
           <div className="mt-12 grid md:grid-cols-3 gap-6">
             <FeatureCard
               icon={BookOpen}
               title="Lesson plan + class notes"
-              description="Clear structure, objectives, and teaching flow."
+              description="Clear objectives, key terms, teaching steps, timing, and activities. Ready to use in the classroom."
               index={0}
             />
             <FeatureCard
               icon={CheckSquare}
               title="Quiz + answer key"
-              description="Instant assessment with marking support."
+              description="Multiple choice, short answer, and fill-in-the-blank questions with complete answers for quick marking."
               index={1}
             />
             <FeatureCard
               icon={MessageSquare}
-              title="Marking guide + feedback examples"
-              description="Rubrics and sample feedback that save time."
+              title="Marking guide + feedback"
+              description="Rubrics for consistent scoring plus sample feedback comments by performance level."
               index={2}
             />
           </div>
@@ -204,7 +223,7 @@ export default function HomePage() {
           <SectionHeader
             badge="Process"
             title="How it works"
-            description="Four simple steps to your lesson pack"
+            description="Four simple steps from prompt to lesson pack"
           />
 
           <motion.div
@@ -218,33 +237,26 @@ export default function HomePage() {
               {
                 step: "1",
                 title: "Choose",
-                description:
-                  "Select subject, topic, and class level",
+                description: "Select your subject, topic, class level, and duration",
               },
               {
                 step: "2",
                 title: "Generate",
-                description:
-                  "Classbridge generates a full lesson pack",
+                description: "Classbridge creates a complete lesson pack in under 2 minutes",
               },
               {
                 step: "3",
                 title: "Edit",
-                description: "Edit if needed and download/share",
+                description: "Review, adjust, and personalise to match your teaching style",
               },
               {
                 step: "4",
                 title: "Reuse",
-                description:
-                  "Reuse templates and build your library over time",
+                description: "Save templates and build your resource library over time",
               },
             ].map((item, index) => (
-              <motion.div
-                key={item.step}
-                variants={fadeInUp}
-                className="relative"
-              >
-                <div className="card-feature text-center">
+              <motion.div key={item.step} variants={fadeInUp} className="relative">
+                <div className="card-feature text-center h-full">
                   <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center mx-auto mb-4 text-xl font-bold">
                     {item.step}
                   </div>
@@ -267,44 +279,129 @@ export default function HomePage() {
       {/* Who It's For Section */}
       <section className="section-padding">
         <div className="container-main">
-          <SectionHeader
-            badge="Audience"
-            title="Who it's for"
-            description="Built for educators who value their time"
-          />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <SectionHeader
+                badge="Audience"
+                title="Who it's for"
+                description="Built for educators who value their time and learner outcomes"
+                align="left"
+              />
 
-          <div className="mt-12 grid md:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={Users}
-              title="Teachers"
-              description="Schools, tutors, and coaching centres looking to streamline lesson prep."
-              index={0}
-            />
-            <FeatureCard
-              icon={FileText}
-              title="Learning coordinators"
-              description="Who standardise teaching materials across teams and levels."
-              index={1}
-            />
-            <FeatureCard
-              icon={Building}
-              title="Education organisations"
-              description="Supporting teacher capacity and quality of instruction."
-              index={2}
-            />
+              <div className="mt-8 space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Teachers</h3>
+                    <p className="text-muted-foreground">
+                      Classroom teachers, private tutors, and lesson teachers at coaching centres.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Learning coordinators</h3>
+                    <p className="text-muted-foreground">
+                      Academic heads and coordinators who standardise teaching materials across teams.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Building className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground mb-1">Education organisations</h3>
+                    <p className="text-muted-foreground">
+                      NGOs and training programmes supporting teacher capacity and quality.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative rounded-2xl overflow-hidden shadow-xl"
+            >
+              <img
+                src={studentsLearning}
+                alt="Students collaborating on a classroom assignment"
+                className="w-full h-auto object-cover"
+              />
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Why AI Section */}
+      {/* Key Features Section */}
       <section className="section-padding bg-secondary/30">
         <div className="container-main">
-          <div className="max-w-3xl mx-auto text-center">
-            <SectionHeader
-              badge="Why AI"
-              title="Great teaching materials follow patterns"
-              description="But building them from scratch every time wastes effort. AI helps turn your intent into structured outputs quickly, so teachers spend more time teaching and supporting learners."
-            />
+          <SectionHeader
+            badge="Capabilities"
+            title="Key features"
+            description="What makes Classbridge effective for busy teachers"
+          />
+
+          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Clock,
+                title: "Fast generation",
+                description: "Complete lesson packs in under 2 minutes",
+              },
+              {
+                icon: Target,
+                title: "Curriculum-aligned",
+                description: "Outputs match Junior Secondary learning objectives",
+              },
+              {
+                icon: Zap,
+                title: "Fully editable",
+                description: "Adjust any section before downloading or sharing",
+              },
+              {
+                icon: Layers,
+                title: "Multiple formats",
+                description: "Quiz types include MCQ, short answer, and fill-in-the-blank",
+              },
+              {
+                icon: Shield,
+                title: "Consistent quality",
+                description: "Structured outputs every time, reducing variability",
+              },
+              {
+                icon: Globe,
+                title: "Region-flexible",
+                description: "General templates with curriculum customisation coming soon",
+              },
+            ].map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="flex items-start gap-4 p-6 bg-card rounded-xl border border-border"
+              >
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <feature.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-1">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -313,9 +410,9 @@ export default function HomePage() {
       <section className="section-padding">
         <div className="container-main">
           <SectionHeader
-            badge="See It Today"
-            title="Proof you can see today"
-            description="Download sample materials and see the quality for yourself"
+            badge="Early Access Open"
+            title="See the output quality"
+            description="Real examples of what Classbridge generates"
           />
 
           <motion.div
@@ -324,27 +421,15 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="mt-12 grid md:grid-cols-3 gap-6"
           >
-            {[
-              "Sample lesson pack (PDF)",
-              "Sample quiz + answer key",
-              "Sample marking guide and feedback",
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="card-feature flex items-center gap-4 cursor-pointer hover:border-primary/30"
-              >
-                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <FileText className="w-6 h-6 text-accent" />
-                </div>
-                <span className="font-medium text-foreground">{item}</span>
-              </div>
-            ))}
+            <LessonPlanMockup />
+            <QuizMockup />
+            <MarkingGuideMockup />
           </motion.div>
 
           <div className="mt-10 text-center">
             <Button size="lg" variant="accent" asChild>
               <Link to="/contact">
-                Get a sample pack
+                Request a sample pack
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
@@ -355,10 +440,7 @@ export default function HomePage() {
       {/* FAQ Section */}
       <section className="section-padding bg-secondary/30">
         <div className="container-main">
-          <SectionHeader
-            badge="FAQ"
-            title="Frequently asked questions"
-          />
+          <SectionHeader badge="FAQ" title="Frequently asked questions" />
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -370,19 +452,19 @@ export default function HomePage() {
               {[
                 {
                   q: "Is Classbridge replacing teachers?",
-                  a: "No. It supports teachers by speeding up planning and assessment.",
+                  a: "No. Classbridge is a tool that supports teachers by reducing time spent on repetitive planning tasks. Teachers remain in control of the classroom, the pedagogy, and the learner relationships.",
                 },
                 {
-                  q: "Can I edit the materials?",
-                  a: "Yes. Everything is editable before download or use.",
+                  q: "Can I edit the materials it generates?",
+                  a: "Yes. Every output is fully editable. You can adjust objectives, add examples, change questions, or reword feedback before downloading or sharing with learners.",
                 },
                 {
-                  q: "Which levels does it support?",
-                  a: "Starting with Junior Secondary. Primary and Senior Secondary are on the roadmap.",
+                  q: "Which class levels does it currently support?",
+                  a: "We're starting with Junior Secondary (JSS1, JSS2, JSS3). Primary and Senior Secondary levels are on our roadmap and will be available in future updates.",
                 },
                 {
-                  q: "Does it work for different countries?",
-                  a: "Yes. We start general, then allow curriculum templates by region.",
+                  q: "Does it work for different curricula and countries?",
+                  a: "Yes. We begin with general templates that work across regions. Curriculum-specific templates (e.g. Nigerian Basic Education, UK National Curriculum) are coming soon.",
                 },
               ].map((faq, index) => (
                 <AccordionItem
@@ -406,7 +488,7 @@ export default function HomePage() {
       {/* Final CTA */}
       <CTASection
         title="Teach with more structure in less time"
-        description="Request early access or download a sample pack."
+        description="Request early access or ask for a sample pack to see the quality for yourself."
       />
     </Layout>
   );
